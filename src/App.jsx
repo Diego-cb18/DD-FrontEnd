@@ -12,7 +12,7 @@ function App() {
   const [selectedReport, setSelectedReport] = useState(null); // Reporte para el modal
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/reports/')
+      fetch('https://vigiadrowsyapp.duckdns.org/reports/')
       .then(res => res.json())
       .then(data => setReports(data))
       .catch(err => console.error("Error al cargar reportes:", err));
