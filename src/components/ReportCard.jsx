@@ -1,6 +1,6 @@
 import React from 'react';
 import userDefault from '../assets/imgs/userDefault.png';
-import busDefault from '../assets/imgs/minibusDefault';
+import busDefault from '../assets/imgs/minibusDefault.png';
 import camionDefault from '../assets/imgs/camionDfault.png';
 import minibusDefault from '../assets/imgs/minibusDefault.png';
 import descargaDefault from '../assets/imgs/descargaDefault.png';
