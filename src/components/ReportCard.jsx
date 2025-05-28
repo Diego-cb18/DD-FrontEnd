@@ -1,8 +1,8 @@
 import React from 'react';
 import userDefault from '../assets/imgs/userDefault.png';
-import busDefault from '../assets/imgs/minibusdefault.png';
-import camionDefault from '../assets/imgs/camiondefault.png';
-import minibusDefault from '../assets/imgs/minibusdefault.png';
+import busDefault from '../assets/imgs/minibusDefault';
+import camionDefault from '../assets/imgs/camionDfault.png';
+import minibusDefault from '../assets/imgs/minibusDefault.png';
 import descargaDefault from '../assets/imgs/descargaDefault.png';
 import { generatePDF } from '../utils/pdfGenerator';
 
