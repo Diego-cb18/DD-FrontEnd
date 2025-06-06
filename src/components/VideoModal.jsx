@@ -22,7 +22,7 @@ const VideoModal = ({ report, onClose, onMarkReviewed }) => {
 
     const handleMarkReviewed = async () => {
     try {
-        await fetch(`http://vigiadrowsyapp/reports/${id}/mark-reviewed/`, {
+        await fetch(`https://vigiadrowsyapp/reports/${id}/mark-reviewed/`, {
         method: 'PATCH',
         });
         window.location.reload();  // <-- fuerza la recarga completa
