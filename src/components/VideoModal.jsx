@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
 
-const VideoModal = ({ report, onClose, onMarkReviewed }) => {
-  const { url_videos = [], critical_events, estado, generated_at, first_name, last_name, id } = report;
+const VideoModal = ({ report, onClose }) => {
+  const {
+    url_videos = [],
+    critical_events,
+    estado,
+    generated_at,
+    first_name,
+    last_name,
+    id
+  } = report;
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const fecha = new Date(generated_at);
@@ -20,17 +29,37 @@ const VideoModal = ({ report, onClose, onMarkReviewed }) => {
     setCurrentIndex((prev) => (prev < url_videos.length - 1 ? prev + 1 : 0));
   };
 
-    const handleMarkReviewed = async () => {
-    try {
-        await fetch(`https://vigiadrowsyapp/reports/${id}/mark-reviewed/`, {
-        method: 'PATCH',
-        });
-        window.location.reload();  // <-- fuerza la recarga completa
-    } catch (error) {
-        console.error("Error al marcar como revisado:", error);
-    }
-    };
+  const handleMarkReviewed = async () => {
+    console.log("Intentando marcar como revisado. ID:", id);
 
+    try {
+      const response = await fetch(`https://vigiadrowsyapp.duckdns.org/reports/${id}/mark-reviewed/`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      console.log("Código de respuesta:", response.status);
+      const text = await response.text();
+      console.log("Respuesta del servidor:", text);
+
+      if (!response.ok) {
+        throw new Error(`Error en la respuesta del servidor: ${response.status}`);
+      }
+
+      console.log("Marcado como revisado exitosamente.");
+
+      if (onClose) {
+        onClose(); // cerrar el modal
+      }
+
+      window.location.href = "/"; // redirigir a la lista de reportes
+
+    } catch (error) {
+      console.error("Error al marcar como revisado:", error);
+    }
+  };
 
   const isRevisado = estado?.toLowerCase() === 'revisado';
 
@@ -62,9 +91,7 @@ const VideoModal = ({ report, onClose, onMarkReviewed }) => {
         )}
 
         <div className="grid grid-cols-[1fr_3fr] gap-6 mb-6 px-12 py-4">
-
-          {/* Columna izquierda (2/5) */}
-          
+          {/* Columna izquierda */}
           <div className="text-left">
             <div className="flex ml-6 mb-4 space-x-8">
               <button
@@ -92,11 +119,7 @@ const VideoModal = ({ report, onClose, onMarkReviewed }) => {
             </div>
             <p>
               Estado:{' '}
-              <span
-                className={`font-bold ${
-                  isRevisado ? 'text-green-600' : 'text-red-600'
-                }`}
-              >
+              <span className={`font-bold ${isRevisado ? 'text-green-600' : 'text-red-600'}`}>
                 {estado}
               </span>
             </p>
@@ -104,7 +127,7 @@ const VideoModal = ({ report, onClose, onMarkReviewed }) => {
             <p>{`${first_name} ${last_name}`}</p>
           </div>
 
-          {/* Columna derecha (3/5) con scroll */}
+          {/* Columna derecha */}
           <div className="max-h-[120px] overflow-y-auto pr-2 mt-2">
             <h3 className="text-lg font-semibold mb-2">Eventos registrados:</h3>
             <ul className="list-disc ml-6 space-y-1">
