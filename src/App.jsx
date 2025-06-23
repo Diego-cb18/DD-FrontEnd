@@ -36,7 +36,11 @@ function App() {
 
   const filterReports = () => {
     let filtered = reports.filter(report => {
+
+      const hasVideo = report.video_names && report.video_names.length > 0;
+
       const fullName = `${report.first_name} ${report.last_name}`.toLowerCase();
+
       const matchesSearch = fullName.includes(searchTerm.toLowerCase());
 
       const matchesDate = !activeDate || new Date(report.generated_at).toDateString() === activeDate.toDateString();
@@ -46,7 +50,7 @@ function App() {
         matchesEstado = report.estado === filter;
       }
 
-      return matchesSearch && matchesDate && matchesEstado;
+      return hasVideo && matchesSearch && matchesDate && matchesEstado;
     });
 
     if (filter === "Más recientes" || filter === "") {

@@ -24,7 +24,12 @@ function Sidebar({ searchTerm, setSearchTerm, filter, setFilter, selectedDate, h
             type="text"
             placeholder="Buscar conductor"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => {
+              const input = e.target.value;
+              const filtered = input.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '').slice(0, 25);
+              setSearchTerm(filtered);
+            }}
+            maxLength={20}
             className="bg-white/40 w-full px-4 py-4 pr-14 rounded-xl border-2 border-black focus:outline-none"
           />
           <button
@@ -70,14 +75,14 @@ function Sidebar({ searchTerm, setSearchTerm, filter, setFilter, selectedDate, h
             dateFormat="dd/MM/yyyy"
             calendarClassName="custom-calendar"
             highlightDates={[selectedDate]} 
+            maxDate={new Date()}
             />
-
         </div>
       </div>
-
+      
       {/* Parte inferior: copyright */}
       <div className="text-center text-lg text-gray-600 mt-6">
-        vigIA 2025©
+        ---
       </div>
     </aside>
   );
