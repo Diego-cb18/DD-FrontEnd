@@ -12,7 +12,7 @@ Este repositorio contiene el **frontend** del sistema de detección de somnolenc
 
 ## 📦 Instalación y ejecución local
 
-1. Clonar el repositorio:
+Clonar el repositorio:
    ```bash
    git clone https://github.com/Diego-cb18/DD-FrontEnd.git
    cd DD-FrontEnd
