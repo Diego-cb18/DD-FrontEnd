@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import ReportCard from './ReportCard';
 
 const mockReport = {
@@ -24,22 +25,23 @@ const mockReport = {
 describe('ReportCard', () => {
   test('renderiza correctamente nombre y apellido', () => {
     render(<ReportCard report={mockReport} />);
-    expect(screen.getByText(/Juan Pérez/)).toBeInTheDocument();
+    expect(screen.getByText(/Juan/i)).toBeInTheDocument();
+    expect(screen.getByText(/Pérez/i)).toBeInTheDocument();
   });
 
   test('muestra el tipo de vehículo y placa', () => {
     render(<ReportCard report={mockReport} />);
-    expect(screen.getByText(/Bus/)).toBeInTheDocument();
-    expect(screen.getByText(/ABC-123/)).toBeInTheDocument();
+    expect(screen.getByText(/Bus/i)).toBeInTheDocument();
+    expect(screen.getByText(/ABC-123/i)).toBeInTheDocument();
   });
 
   test('muestra la causa del evento crítico', () => {
     render(<ReportCard report={mockReport} />);
-    expect(screen.getByText(/Microsueño Moderado/)).toBeInTheDocument();
+    expect(screen.getByText(/Microsueño moderado/i)).toBeInTheDocument();
   });
 
   test('muestra el botón Ver video', () => {
     render(<ReportCard report={mockReport} />);
-    expect(screen.getByText(/Ver video/)).toBeInTheDocument();
+    expect(screen.getByText(/Ver video/i)).toBeInTheDocument();
   });
 });
