@@ -1,6 +1,5 @@
 @import "tailwindcss";
-@import 'react-datepicker/dist/react-datepicker.css';
-
+@import "react-datepicker/dist/react-datepicker.css";
 
 .custom-calendar {
   width: 100%;
@@ -10,7 +9,7 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   font-family: inherit;
   padding: 8px;
-  background-color: rgba(255, 255, 255, 0.40);
+  background-color: rgba(255, 255, 255, 0.4);
   font-size: 15px;
 }
 
@@ -21,11 +20,15 @@
   border-radius: 50%;
 }
 .custom-calendar .react-datepicker__day--keyboard-selected {
-  background-color: transparent !important;
+  background-color: transparent;
 }
 /* Día hover */
 .custom-calendar .react-datepicker__day:hover {
   background-color: #d4d4d4;
   color: #828282;
   border-radius: 50%;
+}
+
+.custom-calendar .react-datepicker__header {
+  background-color: transparent;
 }

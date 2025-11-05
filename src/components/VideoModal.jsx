@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 
-const VideoModal = ({ report, onClose }) => {
+const VideoModal = ({ report, onClose, navigate }) => {
   const {
     url_videos = [],
     critical_events,
@@ -30,31 +32,17 @@ const VideoModal = ({ report, onClose }) => {
   };
 
   const handleMarkReviewed = async () => {
-    console.log("Intentando marcar como revisado. ID:", id);
-
     try {
-      const response = await fetch(`https://vigiadrowsyapp.duckdns.org/reports/${id}/mark-reviewed/`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      const reportRef = doc(db, 'reports', id);
+      await updateDoc(reportRef, {
+        'reporte_somnolencia.estado': 'Revisado'
       });
-
-      console.log("Código de respuesta:", response.status);
-      const text = await response.text();
-      console.log("Respuesta del servidor:", text);
-
-      if (!response.ok) {
-        throw new Error(`Error en la respuesta del servidor: ${response.status}`);
-      }
-
-      console.log("Marcado como revisado exitosamente.");
 
       if (onClose) {
         onClose(); // cerrar el modal
       }
 
-      window.location.href = "/"; // redirigir a la lista de reportes
+      navigate('/reports'); // redirigir a la lista de reportes
 
     } catch (error) {
       console.error("Error al marcar como revisado:", error);
