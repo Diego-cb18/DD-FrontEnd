@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { doc, updateDoc } from 'firebase/firestore';
-import { db } from '../firebase';
 
-const VideoModal = ({ report, onClose, navigate }) => {
+const VideoModal = ({ report, onClose, onMarkReviewed }) => {
   const {
     url_videos = [],
     critical_events,
@@ -29,24 +27,6 @@ const VideoModal = ({ report, onClose, navigate }) => {
 
   const handleNext = () => {
     setCurrentIndex((prev) => (prev < url_videos.length - 1 ? prev + 1 : 0));
-  };
-
-  const handleMarkReviewed = async () => {
-    try {
-      const reportRef = doc(db, 'reports', id);
-      await updateDoc(reportRef, {
-        'reporte_somnolencia.estado': 'Revisado'
-      });
-
-      if (onClose) {
-        onClose(); // cerrar el modal
-      }
-
-      navigate('/reports'); // redirigir a la lista de reportes
-
-    } catch (error) {
-      console.error("Error al marcar como revisado:", error);
-    }
   };
 
   const isRevisado = estado?.toLowerCase() === 'revisado';
@@ -130,7 +110,7 @@ const VideoModal = ({ report, onClose, navigate }) => {
 
         <div className="text-center mb-4">
           <button
-            onClick={handleMarkReviewed}
+            onClick={() => onMarkReviewed(id)}
             disabled={isRevisado}
             className={`px-6 py-2 rounded transition ${
               isRevisado

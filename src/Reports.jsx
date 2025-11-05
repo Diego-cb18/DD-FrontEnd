@@ -4,7 +4,6 @@ import Sidebar from './components/Sidebar';
 import VideoModal from './components/VideoModal';
 import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { db } from './firebase';
-import { useNavigate } from 'react-router-dom';
 
 // Funciones para generar datos aleatorios
 const nombres = ["Diego", "Juan", "Luis", "Carlos"];
@@ -29,7 +28,6 @@ function Reports() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [activeDate, setActiveDate] = useState(null);
   const [selectedReport, setSelectedReport] = useState(null); // Reporte para el modal
-  const navigate = useNavigate();
 
   const fetchReports = async () => {
     try {
@@ -74,7 +72,8 @@ function Reports() {
       await updateDoc(reportRef, {
         'reporte_somnolencia.estado': 'Revisado'
       });
-      navigate('/reports');
+      setReports(prev => prev.map(r => r.id === reportId ? {...r, estado: 'Revisado'} : r));
+      setSelectedReport(null);
     } catch (error) {
       console.error("Error al marcar como revisado:", error);
     }
@@ -162,7 +161,7 @@ function Reports() {
         <VideoModal
           report={selectedReport}
           onClose={() => setSelectedReport(null)}
-          navigate={navigate}
+          onMarkReviewed={handleMarkReviewed}
         />
       )}
     </div>
