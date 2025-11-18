@@ -56,10 +56,21 @@ function ReportCard({ report, onViewVideo, onMarkReviewed }) {
   };
   const getDefaultDimensions = (type) => {
     const tipo = type?.toLowerCase();
-    if (tipo.includes("bus")) return { weight: "9.0 t", height: "3.2 m" };
-    if (tipo.includes("camión")) return { weight: "12.0 t", height: "3.5 m" };
-    if (tipo.includes("minibús") || tipo.includes("minibus"))
-      return { weight: "4.5 t", height: "2.8 m" };
+    if (tipo.includes("minibús") || tipo.includes("minibus")) {
+      const height = (Math.random() * 0.2 + 1.5).toFixed(1); // 1.5 - 1.7 m
+      const weight = (Math.random() * 1.0 + 4.0).toFixed(1); // 4.0 - 5.0 t
+      return { weight: `${weight} T`, height: `${height} M` };
+    }
+    if (tipo.includes("bus")) {
+      const height = (Math.random() * 0.5 + 3.0).toFixed(1); // 3.0 - 3.5 m
+      const weight = (Math.random() * 2.0 + 8.0).toFixed(1); // 8.0 - 10.0 t
+      return { weight: `${weight} T`, height: `${height} M` };
+    }
+    if (tipo.includes("camión")) {
+      const height = (Math.random() * 0.5 + 3.5).toFixed(1); // 3.5 - 4.0 m
+      const weight = (Math.random() * 5.0 + 10.0).toFixed(1); // 10.0 - 15.0 t
+      return { weight: `${weight} T`, height: `${height} M` };
+    }
     return { weight: "-", height: "-" };
   };
 
@@ -70,6 +81,8 @@ function ReportCard({ report, onViewVideo, onMarkReviewed }) {
   const period = rawHours >= 12 ? "P.M." : "A.M.";
   const hours = (((rawHours + 11) % 12) + 1).toString().padStart(2, "0");
   const horaStr = `${hours}:${minutes} ${period}`;
+
+  const isRevisado = estado?.toLowerCase() === 'revisado';
 
   return (
     <div className="bg-white/40 rounded-2xl shadow-[0_10px_15px_-3px_rgba(0,0,0,0.4)] p-8 w-2/3 max-w-6xl mx-auto mb-6 grid grid-cols-[1.3fr_1.3fr_2.5fr] gap-6">
@@ -112,8 +125,8 @@ function ReportCard({ report, onViewVideo, onMarkReviewed }) {
             return (
               <>
                 <p>
-                  Peso: {weight ?? defaults.weight} - Altura:{" "}
-                  {height ?? defaults.height}
+                  Peso: {weight || defaults.weight} - Altura:{" "}
+                  {height || defaults.height}
                 </p>
               </>
             );
@@ -160,7 +173,12 @@ function ReportCard({ report, onViewVideo, onMarkReviewed }) {
               )}
               <button
                 onClick={() => onMarkReviewed(report.id)}
-                className="bg-[#0C0C0C] text-white px-4 py-2 rounded border hover:bg-gray-700 text-sm cursor-pointer mr-2"
+                disabled={isRevisado}
+                className={`px-4 py-2 rounded border text-sm mr-2 ${
+                  isRevisado
+                    ? 'bg-gray-300 text-gray-600 cursor-not-allowed'
+                    : 'bg-[#0C0C0C] text-white hover:bg-gray-700 cursor-pointer'
+                }`}
               >
                 Marcar Revisado
               </button>

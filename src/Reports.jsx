@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import ReportCard from './components/ReportCard';
 import Sidebar from './components/Sidebar';
 import VideoModal from './components/VideoModal';
+import TermsModal from './components/TermsModal';
 import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { db } from './firebase';
+import { useNavigate } from 'react-router-dom';
 
 // Funciones para generar datos aleatorios
 const nombres = ["Diego", "Juan", "Luis", "Carlos"];
@@ -28,6 +30,8 @@ function Reports() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [activeDate, setActiveDate] = useState(null);
   const [selectedReport, setSelectedReport] = useState(null); // Reporte para el modal
+  const [showTerms, setShowTerms] = useState(!localStorage.getItem('termsAccepted'));
+  const navigate = useNavigate();
 
   const fetchReports = async () => {
     try {
@@ -156,6 +160,13 @@ function Reports() {
               ))}
         </div>
       </main>
+
+      {showTerms && (
+        <TermsModal
+          onAccept={() => { localStorage.setItem('termsAccepted', 'true'); setShowTerms(false); }}
+          onReject={() => navigate('/')}
+        />
+      )}
 
       {selectedReport && (
         <VideoModal

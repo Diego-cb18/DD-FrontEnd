@@ -82,7 +82,7 @@ function Sidebar({ searchTerm, setSearchTerm, filter, setFilter, selectedDate, h
       
       {/* Parte inferior: copyright */}
       <div className="text-center text-lg text-gray-600 mt-6">
-        ---
+        VigIA 2025
       </div>
     </aside>
   );
