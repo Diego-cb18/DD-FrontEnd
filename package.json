@@ -11,6 +11,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@antv/g2plot": "^2.4.28",
     "@tailwindcss/vite": "^4.1.7",
     "firebase": "^12.5.0",
     "html2canvas": "^1.4.1",

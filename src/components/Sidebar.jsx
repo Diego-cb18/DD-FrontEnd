@@ -8,7 +8,7 @@ import lupaDefault from '../assets/imgs/lupaDefault.png';
 
 function Sidebar({ searchTerm, setSearchTerm, filter, setFilter, selectedDate, handleDateSelect }) {
   return (
-    <aside className="bg-white/40 w-80 min-h-screen px-8 py-10 flex flex-col justify-between fixed left-0 top-0 shadow-md">
+    <aside className="bg-white/40 w-80 min-h-screen px-8 py-10 flex flex-col justify-between fixed left-20 top-0 shadow-md">
       {/* Parte superior */}
       <div className="space-y-6">
         {/* Logo */}

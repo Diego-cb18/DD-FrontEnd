@@ -144,7 +144,7 @@ function Reports() {
         selectedDate={selectedDate}
         handleDateSelect={handleDateSelect}
       />
-      <main className="ml-80 p-10 flex justify-center items-start w-full">
+      <main className="ml-[26rem] p-10 flex justify-center items-start w-full">
         <div className="w-full h-full bg-[#C4C4C4] rounded-2xl overflow-y-auto">
           {loading
             ? <p>Cargando reportes...</p>

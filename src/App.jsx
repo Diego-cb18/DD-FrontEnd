@@ -4,6 +4,9 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase';
 import Login from './components/Login';
 import Reports from './Reports';
+import Comments from './Comments';
+import Graph from './Graph';
+import MenuGeneral from './components/MenuGeneral';
 
 function ProtectedRoute({ children }) {
   const [user, setUser] = useState(null);
@@ -26,7 +29,39 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
+        <Route
+          path="/reports"
+          element={
+            <ProtectedRoute>
+              <>
+                <MenuGeneral />
+                <Reports />
+              </>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/coments"
+          element={
+            <ProtectedRoute>
+              <>
+                <MenuGeneral />
+                <Comments />
+              </>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/graph"
+          element={
+            <ProtectedRoute>
+              <>
+                <MenuGeneral />
+                <Graph />
+              </>
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </Router>
   );
